@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {
     View,
     Text,
-    ScrollView,
     Image,
     TouchableOpacity,
     StyleSheet,
@@ -11,7 +10,7 @@ import {
 } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import {Link, Stack} from 'expo-router';
+import {Link} from 'expo-router';
 
 // Tipe data untuk item di keranjang
 interface CartItem {
@@ -41,12 +40,7 @@ const initialCartItems: CartItem[] = [
 ];
 
 // Komponen untuk setiap item di keranjang
-const CartItemCard = ({
-                          item,
-                          onIncreaseQuantity,
-                          onDecreaseQuantity,
-                          onRemoveItem
-                      }: {
+const CartItemCard = ({item, onIncreaseQuantity, onDecreaseQuantity, onRemoveItem}: {
     item: CartItem;
     onIncreaseQuantity: (id: string) => void;
     onDecreaseQuantity: (id: string) => void;
@@ -173,8 +167,7 @@ export default function CartScreen() {
                                 Rp {subtotal.toLocaleString('id-ID')} {/* Ganti dengan total akhir jika ada biaya lain */}
                             </Text>
                         </View>
-
-                        <Link href="/payment" asChild>
+                        <Link href={{pathname: "/payment", params: {totalAmount: subtotal}}} asChild>
                             <TouchableOpacity style={styles.checkoutButton}>
                                 <Text style={styles.checkoutButtonText}>Proceed to Payment</Text>
                             </TouchableOpacity>
